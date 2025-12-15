@@ -3306,6 +3306,7 @@ class QualityMonitorData {
   String? targetBitrate;
   String? codecFormat;
   String? chroma;
+  String? connectionType; // 新增：连接类型 (P2P/Relay)  
 }
 
 class QualityMonitorModel with ChangeNotifier {
@@ -3368,6 +3369,10 @@ class QualityMonitorModel with ChangeNotifier {
       if (evt.containsKey('chroma') && (evt['chroma'] as String).isNotEmpty) {
         _data.chroma = evt['chroma'];
       }
+      // 新增：更新连接类型  
+     if (evt.containsKey('connection_type') && (evt['connection_type'] as String).isNotEmpty) {  
+       _data.connectionType = evt['connection_type'];  
+     }
       notifyListeners();
     } catch (e) {
       //
