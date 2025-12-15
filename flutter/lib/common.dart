@@ -4011,6 +4011,39 @@ String getConnectionText(bool secure, bool direct, String streamType) {
   }
 }
 
+String getConnectionTypeText(bool secure, bool direct) {  
+  // 严谨的多种情况判断  
+  if (direct) {  
+    return "P2P";  
+  } else {  
+    return "Relay";  
+  }  
+}  
+  
+// 更详细的连接类型判断（可选）  
+String getDetailedConnectionType(bool secure, bool direct, String streamType) {  
+  String connectionType;  
+  if (secure && direct) {  
+    connectionType = "P2P";  
+  } else if (secure && !direct) {  
+    connectionType = "Relay";  
+  } else if (!secure && direct) {  
+    connectionType = "P2P";  
+  } else {  
+    connectionType = "Relay";  
+  }  
+    
+  // 添加流类型信息  
+  if (streamType == 'Relay') {  
+    streamType = 'TCP';  
+  }  
+  if (streamType.isNotEmpty) {  
+    connectionType += " ($streamType)";  
+  }  
+    
+  return connectionType;  
+}
+
 String decode_http_response(http.Response resp) {
   try {
     // https://github.com/rustdesk/rustdesk-server-pro/discussions/758
