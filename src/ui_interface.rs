@@ -112,6 +112,19 @@ pub fn update_me(_path: String) {
     goto_install();
 }
 
+#[cfg(feature = "flutter")]  
+pub fn init_default_config() {  
+    // 设置默认服务器配置  
+    set_user_default_option("custom-rendezvous-server".to_string(), "your-id-server.com".to_string());  
+    set_user_default_option("relay-server".to_string(), "your-relay-server.com".to_string());  
+    set_user_default_option("api-server".to_string(), "your-api-server.com".to_string());  
+    set_user_default_option("key".to_string(), "your-api-key".to_string());  
+      
+    // 设置网络默认值   
+    set_user_default_option("enable-udp-punch".to_string(), "Y".to_string());  
+    set_user_default_option("enable-ipv6-punch".to_string(), "Y".to_string());  
+}
+
 #[inline]
 pub fn run_without_install() {
     crate::run_me(vec!["--noinstall"]).ok();
