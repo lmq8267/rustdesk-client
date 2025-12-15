@@ -606,6 +606,8 @@ class QualityMonitor extends StatelessWidget {
                       _row(
                           "Codec", qualityMonitorModel.data.codecFormat ?? '-'),
                       _row("Chroma", qualityMonitorModel.data.chroma ?? '-'),
+                      _row("Connection", qualityMonitorModel.data.connectionType ?? '-',   
+                          rightColor: qualityMonitorModel.data.connectionType == "P2P" ? Colors.green : Colors.orange), // 新增
                     ],
                   ),
                 )
