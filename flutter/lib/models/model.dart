@@ -254,6 +254,15 @@ class FfiModel with ChangeNotifier {
     } catch (e) {
       //
     }
+    // 新增：更新质量监控中的连接类型  
+   try {  
+     final connectionTypeText = getConnectionTypeText(secure, direct);  
+     parent.target?.qualityMonitorModel.updateQualityStatus({  
+       'connection_type': connectionTypeText,  
+     });  
+   } catch (e) {  
+     // 静默处理错误，避免影响主要功能  
+   }
   }
 
   Widget? getConnectionImageText() {
