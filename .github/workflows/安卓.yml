@@ -155,6 +155,7 @@ jobs:
 
       - name: 安装bridge生成依赖  
         run: |  
+          pushd flutter && flutter pub get && popd 
           cargo install cargo-expand --version 1.0.95 --locked  
           cargo install flutter_rust_bridge_codegen --version 1.80.1 --features "uuid" --locked  
   
