@@ -89,7 +89,17 @@ jobs:
       - name: 检出源代码  
         uses: actions/checkout@v5
         with:  
-          submodules: recursive  
+          submodules: recursive
+
+      - name: 安装bridge生成依赖  
+        run: |  
+          cargo install cargo-expand --version 1.0.95 --locked  
+          cargo install flutter_rust_bridge_codegen --version 1.80.1 --features "uuid" --locked  
+  
+      - name: 生成本地bridge文件  
+        run: |  
+          ~/.cargo/bin/flutter_rust_bridge_codegen --rust-input ./src/flutter_ffi.rs --dart-output ./flutter/lib/generated_bridge.dart --c-output ./flutter/macos/Runner/bridge_generated.h  
+          cp ./flutter/macos/Runner/bridge_generated.h ./flutter/ios/Runner/bridge_generated.h
   
       - name: 安装Flutter  
         uses: subosito/flutter-action@v2  
@@ -140,12 +150,6 @@ jobs:
             exit 1  
           fi  
         shell: bash  
-  
-      - name: 恢复bridge文件  
-        uses: actions/download-artifact@master  
-        with:  
-          name: bridge-artifact  
-          path: ./  
   
       - name: 安装Rust工具链  
         uses: dtolnay/rust-toolchain@v1  
